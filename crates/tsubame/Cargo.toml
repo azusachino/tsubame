@@ -1,0 +1,18 @@
+[package]
+name = "tsubame"
+version = "0.0.1"
+authors = ["azusachino"]
+edition = "2021"
+description = "a handy project for learning oci"
+build = "build.rs"
+
+[dependencies]
+anyhow = "1.0.51"
+chrono = { version="0.4", features=["serde"]}
+oci-spec = { git = "https://github.com/containers/oci-spec-rs",  rev = "d6fb1e91742313cd0d0085937e2d6df5d4669720" }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[build-dependencies]
+anyhow = "1.0.51"
+vergen = "6.0"
