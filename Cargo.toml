@@ -1,7 +1,16 @@
-[workspace]
-members = [
-    "crates/*"
-]
+[package]
+name = "tsubame"
+version = "0.0.1"
+authors = ["azusachino <azusa146@gmail.com>"]
+edition = "2021"
+readme = "README.md"
+license-file = "LICENSE"
+repository = "https://github.com/azusachino/tsubame"
 
-[profile.release]
-lto = true
+[dependencies]
+anyhow = "1.0.55"
+tokio = { version = "1.17.0", features = ["full"] }
+
+[profile.dev]
+opt-level = 0
+overflow-checks = false # Disable integer overflow checks.
