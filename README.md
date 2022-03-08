@@ -1,19 +1,7 @@
 # tsubame
 
-Learning OCI SPEC
+Practicing Rust with Axum Framework.
 
-- [Image Format Specification](https://github.com/opencontainers/image-spec/blob/main/spec.md)
-- [Runtime Specification](https://github.com/opencontainers/runtime-spec/blob/master/spec.md)
-- [Distribution Specification](https://github.com/opencontainers/distribution-spec/blob/main/spec.md)
+## Current status
 
-## Runtime Project
-
-- [Youki](https://github.com/containers/youki)
-- [Runc](https://github.com/opencontainers/runc)
-
-### Image Spec
-
-- manifest
-- image index (optional)
-- filesystem layers
-- configuration
+Using axum to build a normal web project.
