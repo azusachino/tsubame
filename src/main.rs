@@ -72,7 +72,8 @@ async fn using_connection_extractor(
     DatabaseConnection(conn): DatabaseConnection,
 ) -> Result<String, (StatusCode, String)> {
     let mut conn = conn;
-    sqlx::query_scalar("select 'hello world from pg'")
+    // use select 1 to validate MySQL connection
+    sqlx::query_scalar("select 1")
         .fetch_one(&mut conn)
         .await
         .map_err(internal_error)
