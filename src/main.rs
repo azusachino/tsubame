@@ -9,19 +9,19 @@ use axum::{
 
 use sqlx::mysql::{MySqlPool, MySqlPoolOptions};
 use std::{net::SocketAddr, time::Duration};
-use tsubame::CURRENT_VERSION;
+use tsubame::{Config, CURRENT_VERSION};
 
 #[tokio::main]
 async fn main() -> Result<()> {
     println!("Our hope is a little tsubame, current {}", CURRENT_VERSION);
 
-    let db_connection_str = std::env::var("MYSQL_URL")
-        .unwrap_or_else(|_| "mysql://root:abcd1234@localhost".to_string());
+    // init config
+    let _config = Config::from_disk("config.toml")?;
 
     let pool = MySqlPoolOptions::new()
         .max_connections(8)
         .connect_timeout(Duration::from_secs(3))
-        .connect(&db_connection_str)
+        .connect("")
         .await
         .expect("can connect to database");
 
