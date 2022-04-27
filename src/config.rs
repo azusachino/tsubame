@@ -58,20 +58,20 @@ impl<'de> Deserialize<'de> for Config {
         let mut table = match raw {
             Value::Table(t) => t,
             _ => {
-                return Err(D::Error::custom(
+                return Err(Error::custom(
                     "A config file should always be a toml table",
                 ));
             }
         };
         let app: AppConfig = table
             .remove("app")
-            .map(|app| app.try_into().map_err(D::Error::custom))
+            .map(|app| app.try_into().map_err(Error::custom))
             .transpose()?
             .unwrap_or_default();
 
         let mysql: MysqlConfig = table
             .remove("mysql")
-            .map(|app| app.try_into().map_err(D::Error::custom))
+            .map(|app| app.try_into().map_err(Error::custom))
             .transpose()?
             .unwrap_or_default();
         Ok(Config {
@@ -137,5 +137,10 @@ impl MysqlConfig {
             .username(self.username.as_str())
             .password(self.password.as_str())
             .database(self.db.as_str())
+    }
+
+    /// format for sqlx pool connect
+    pub fn to_url(&self) -> String {
+        format!("mysql://{}:{}@{}:{}/{}", self.username, self.password, self.host, self.port, self.db)
     }
 }
