@@ -1,6 +1,6 @@
 use toml::value::{Table, Value};
 
-pub(crate) trait TomlExt {
+pub trait TomlExt {
     fn read(&self, key: &str) -> Option<&Value>;
     fn read_mut(&mut self, key: &str) -> Option<&mut Value>;
     fn insert(&mut self, key: &str, value: Value);

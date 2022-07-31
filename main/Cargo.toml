@@ -1,0 +1,29 @@
+[package]
+name = "tsubame"
+version = "0.0.1"
+authors = ["azusachino <azusa146@gmail.com>"]
+edition = "2021"
+readme = "README.md"
+license-file = "LICENSE"
+repository = "https://github.com/azusachino/tsubame"
+
+[dependencies]
+
+lib = { path = "../lib" }
+
+anyhow = "1.0"
+axum = "0.4"
+serde = "1.0"
+serde_derive = "1.0"
+serde_json = "1.0"
+sqlx = { version = "0.5", features = [
+    "runtime-tokio-rustls",
+    "any",
+    "mysql",
+] }
+tokio = { version = "1.17", features = ["full"] }
+toml = "0.5"
+
+[profile.dev]
+opt-level = 0
+overflow-checks = false # Disable integer overflow checks.

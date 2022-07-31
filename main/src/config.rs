@@ -1,5 +1,5 @@
 use crate::errors::*;
-use crate::utils::toml_ext::TomlExt;
+use crate::toml_ext::TomlExt;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 use serde_derive::{Deserialize, Serialize};
 use sqlx::mysql::MySqlConnectOptions;
