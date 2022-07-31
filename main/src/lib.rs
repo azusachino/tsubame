@@ -14,6 +14,6 @@ pub use lib::toml_ext;
 /// The error types used through out this crate.
 #[allow(unused_imports)]
 pub mod errors {
-    pub(crate) use anyhow::{bail, ensure, Context};
+    pub(crate) use anyhow::Context;
     pub use anyhow::{Error, Result};
 }
