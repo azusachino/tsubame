@@ -9,7 +9,7 @@ pub const CURRENT_VERSION: &str = env!("CARGO_PKG_VERSION");
 
 pub use crate::config::Config;
 
-pub use lib::toml_ext;
+pub use tsubame_lib::toml_ext;
 
 /// The error types used through out this crate.
 #[allow(unused_imports)]

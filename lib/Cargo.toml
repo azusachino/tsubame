@@ -1,5 +1,5 @@
 [package]
-name = "lib"
+name = "tsubame_lib"
 version = "0.0.1"
 authors = ["azusachino <azusa146@gmail.com>"]
 edition = "2021"

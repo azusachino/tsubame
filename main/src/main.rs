@@ -24,7 +24,7 @@ async fn main() -> Result<()> {
 
     let pool = MySqlPoolOptions::new()
         .max_connections(8)
-        .acquire_timeout(Duration::from_secs(3))
+        // .acquire_timeout(Duration::from_secs(3))
         .idle_timeout(Duration::from_secs(5))
         // .connect_timeout(Duration::from_secs(3))
         .connect(&config.mysql.to_url())
