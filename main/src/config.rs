@@ -1,8 +1,7 @@
 use crate::errors::*;
 use crate::toml_ext::TomlExt;
-use serde::{Deserialize, Deserializer, Serialize, Serializer};
+use serde::{Deserializer, Serializer};
 use serde_derive::{Deserialize, Serialize};
-use sqlx::mysql::MySqlConnectOptions;
 use std::fs::File;
 use std::io::Read;
 use std::path::Path;
@@ -14,7 +13,7 @@ use toml::{self, Value};
 #[derive(Debug, Clone, PartialEq)]
 pub struct Config {
     pub app: AppConfig,
-    pub mysql: MysqlConfig,
+    pub postgres: PostgresqlConfig,
     rest: Value,
 }
 
@@ -44,13 +43,13 @@ impl Default for Config {
     fn default() -> Config {
         Config {
             app: AppConfig::default(),
-            mysql: MysqlConfig::default(),
+            postgres: PostgresqlConfig::default(),
             rest: Value::Table(Table::default()),
         }
     }
 }
 
-impl<'de> Deserialize<'de> for Config {
+impl<'de> serde::Deserialize<'de> for Config {
     fn deserialize<D: Deserializer<'de>>(de: D) -> std::result::Result<Self, D::Error> {
         let raw = Value::deserialize(de)?;
 
@@ -58,9 +57,7 @@ impl<'de> Deserialize<'de> for Config {
         let mut table = match raw {
             Value::Table(t) => t,
             _ => {
-                return Err(Error::custom(
-                    "A config file should always be a toml table",
-                ));
+                return Err(Error::custom("A config file should always be a toml table"));
             }
         };
         let app: AppConfig = table
@@ -69,26 +66,27 @@ impl<'de> Deserialize<'de> for Config {
             .transpose()?
             .unwrap_or_default();
 
-        let mysql: MysqlConfig = table
-            .remove("mysql")
+        let postgres: PostgresqlConfig = table
+            .remove("postgres")
             .map(|app| app.try_into().map_err(Error::custom))
             .transpose()?
             .unwrap_or_default();
         Ok(Config {
             app,
-            mysql,
+            postgres: postgres,
             rest: Value::Table(table),
         })
     }
 }
 
-impl Serialize for Config {
+impl serde::Serialize for Config {
     fn serialize<S: Serializer>(&self, s: S) -> std::result::Result<S::Ok, S::Error> {
         let mut table = self.rest.clone();
         let app_config = Value::try_from(&self.app).expect("should always be serializable");
         table.insert("app", app_config);
-        let mysql_config = Value::try_from(&self.mysql).expect("should always be serializable");
-        table.insert("mysql", mysql_config);
+        let postgres_config =
+            Value::try_from(&self.postgres).expect("should always be serializable");
+        table.insert("postgres", postgres_config);
 
         table.serialize(s)
     }
@@ -107,7 +105,7 @@ impl Default for AppConfig {
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
-pub struct MysqlConfig {
+pub struct PostgresqlConfig {
     host: String,
     port: u16,
     username: String,
@@ -116,31 +114,24 @@ pub struct MysqlConfig {
     pub db: String,
 }
 
-impl Default for MysqlConfig {
+impl Default for PostgresqlConfig {
     fn default() -> Self {
         Self {
             host: String::from("localhost"),
-            port: 3306,
-            username: String::from("root"),
-            password: String::from("root"),
-            db: String::from("mysql"),
+            port: 5432,
+            username: String::from("postgres"),
+            password: String::from("postgres"),
+            db: String::from("postgres"),
         }
     }
 }
 
-impl MysqlConfig {
-    /// format to url for sqlx connection
-    pub fn to_options(&self) -> MySqlConnectOptions {
-        MySqlConnectOptions::new()
-            .host(self.host.as_str())
-            .port(self.port)
-            .username(self.username.as_str())
-            .password(self.password.as_str())
-            .database(self.db.as_str())
-    }
-
+impl PostgresqlConfig {
     /// format for sqlx pool connect
     pub fn to_url(&self) -> String {
-        format!("mysql://{}:{}@{}:{}/{}", self.username, self.password, self.host, self.port, self.db)
+        format!(
+            "postgres://{}:{}@{}:{}/{}",
+            self.username, self.password, self.host, self.port, self.db
+        )
     }
 }

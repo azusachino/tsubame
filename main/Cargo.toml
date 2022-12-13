@@ -8,20 +8,20 @@ license-file = "LICENSE"
 repository = "https://github.com/azusachino/tsubame"
 
 [dependencies]
-
 tsubame_lib = { path = "../lib" }
 
 anyhow = "1.0"
-axum = "0.5"
+axum = "0.6"
+dotenv = "0.15"
 serde = "1.0"
 serde_derive = "1.0"
 serde_json = "1.0"
 sqlx = { version = "0.6", features = [
     "runtime-tokio-rustls",
     "any",
-    "mysql",
+    "postgres",
 ] }
-tokio = { version = "1.20", features = ["full"] }
+tokio = { version = "1.23", features = ["full"] }
 toml = "0.5"
 
 [profile.dev]
