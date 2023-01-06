@@ -6,6 +6,11 @@ use tsubame::{Config, CURRENT_VERSION};
 
 #[tokio::main]
 async fn main() -> Result<()> {
+    Ok(())
+}
+
+#[allow(dead_code)]
+fn load_config() -> Result<()> {
     println!(
         "Our future is like a tsubame, current version is {}",
         CURRENT_VERSION
@@ -15,6 +20,5 @@ async fn main() -> Result<()> {
     let config_location = Path::new(".").join("config.toml");
     let config = Config::from_disk(config_location)?;
     println!("current config: {:?}", config);
-
     Ok(())
 }

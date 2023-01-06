@@ -2,6 +2,7 @@
 //!
 //! A bless from [YOASOBI](https://en.wikipedia.org/wiki/Yoasobi)
 
+mod internal;
 pub mod config;
 
 /// The current version of `tsubame`
