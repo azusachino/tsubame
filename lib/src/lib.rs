@@ -7,4 +7,5 @@ mod utils;
 
 mod stats {}
 
+use anyhow::Result;
 pub use utils::toml_ext;
