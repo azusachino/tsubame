@@ -2,6 +2,7 @@
 //! Tsubame Common Local Library
 //!
 
+mod structs;
 mod utils;
 
 mod stats {}
