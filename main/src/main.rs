@@ -1,24 +1,49 @@
-use std::path::Path;
-
 use anyhow::Result;
 
-use tsubame::{Config, CURRENT_VERSION};
+/// Tonic Server mods
+pub mod voting {
+    tonic::include_proto!("voting");
+}
+
+use tonic::{transport::Server, Request, Response, Status};
+use voting::{
+    voting_server::{Voting, VotingServer},
+    VotingRequest, VotingResponse,
+};
+
+#[derive(Debug, Default)]
+pub struct VotingService {}
+
+#[tonic::async_trait]
+impl Voting for VotingService {
+    async fn vote(
+        &self,
+        request: Request<VotingRequest>,
+    ) -> Result<Response<VotingResponse>, Status> {
+        let r = request.into_inner();
+        match r.vote {
+            0 => Ok(Response::new(voting::VotingResponse {
+                confirmation: { format!("Happy to confirm that you upvoted for {}", r.url) },
+            })),
+            1 => Ok(Response::new(voting::VotingResponse {
+                confirmation: { format!("Confirmation that you downvoted for {}", r.url) },
+            })),
+            _ => Err(Status::new(
+                tonic::Code::OutOfRange,
+                "Invalid vote provided",
+            )),
+        }
+    }
+}
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    Ok(())
-}
+    let address = "[::1]:8080".parse().unwrap();
+    let voting_service = VotingService::default();
 
-#[allow(dead_code)]
-fn load_config() -> Result<()> {
-    println!(
-        "Our future is like a tsubame, current version is {}",
-        CURRENT_VERSION
-    );
-
-    // init config
-    let config_location = Path::new(".").join("config.toml");
-    let config = Config::from_disk(config_location)?;
-    println!("current config: {:?}", config);
+    Server::builder()
+        .add_service(VotingServer::new(voting_service))
+        .serve(address)
+        .await?;
     Ok(())
 }
