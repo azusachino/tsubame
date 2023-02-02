@@ -1,7 +1,9 @@
 # tsubame
 
-Practicing Rust with Axum Framework.
+Backend Server for CURD.
 
-## Current status
+## Deps
 
-Using axum to build a normal web project.
+- axum
+- tokio
+- sqlx
