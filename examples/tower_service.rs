@@ -12,12 +12,12 @@ impl Service<Request<Vec<u8>>> for Demo {
 
     fn poll_ready(
         &mut self,
-        cx: &mut std::task::Context<'_>,
+        _: &mut std::task::Context<'_>,
     ) -> std::task::Poll<Result<(), Self::Error>> {
         Poll::Ready(Ok(()))
     }
 
-    fn call(&mut self, req: Request<Vec<u8>>) -> Self::Future {
+    fn call(&mut self, _: Request<Vec<u8>>) -> Self::Future {
         // create the body
         let body: Vec<u8> = "hello, world\n".as_bytes().to_owned();
 

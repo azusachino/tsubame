@@ -1,7 +1,16 @@
-use axum::{routing, Router};
+pub mod mysql;
 
-pub fn build_router() -> Router {
-    Router::new().route("/", routing::get(root))
+pub struct Redis;
+
+pub struct GlobalState {
+    pub db: mysql::Db,
+    pub redis: Redis,
 }
 
-async fn root() {}
+impl GlobalState {
+    pub async fn new() -> Self {
+        let db = mysql::Db::new().await;
+        let redis = Redis {};
+        Self { db, redis }
+    }
+}

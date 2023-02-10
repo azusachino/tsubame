@@ -11,7 +11,10 @@ repository = "https://github.com/azusachino/tsubame"
 anyhow = "1.0"
 axum = "0.6"
 dotenv = "0.15"
+futures = "0.3"
 http = "0.2"
+meilisearch-sdk = "0.22"
+serde = {version = "1.0", features = ["derive"]}
 sqlx = { version = "0.6", features = ["runtime-tokio-rustls", "any", "mysql"] }
 tokio = { version = "1.25", features = ["full"] }
 toml = "0.7"
