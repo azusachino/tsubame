@@ -1,5 +1,9 @@
 use anyhow::Result;
 
+// switch malloc
+#[global_allocator]
+static GLOBAL: tikv_jemallocator::Jemalloc = tikv_jemallocator::Jemalloc;
+
 /// Tonic Server mods
 pub mod voting {
     tonic::include_proto!("voting");

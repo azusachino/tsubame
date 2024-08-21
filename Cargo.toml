@@ -2,5 +2,7 @@
 members = ["lib", "main"]
 
 [profile.release]
+# Link-time optimization (LTO) is a whole-program optimization technique that can improve runtime speed by 10-20% or more, and also reduce binary size, at the cost of worse compile times.
 lto = true
+# The Rust compiler splits crates into multiple codegen units to parallelize (and thus speed up) compilation.
 codegen-units = 1
