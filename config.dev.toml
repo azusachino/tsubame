@@ -1,4 +1,5 @@
-[app]
+[server]
+host = "localhost"
 port = 8585
 
 [postgres]

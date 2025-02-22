@@ -1,7 +1,9 @@
 # tsubame
 
-Practicing Rust with Axum Framework.
+rust practice project
 
-## Current status
+## references
 
-Using axum to build a normal web project.
+- https://actix.rs/docs/getting-started/
+- https://github.com/tokio-rs/axum
+- https://docs.rs/axum

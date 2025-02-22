@@ -13,3 +13,7 @@ Cargo.lock
 
 # dotenv
 .env
+
+# ignore all .prod.* files
+*.prod.*
+prod.*

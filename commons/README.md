@@ -1,8 +1,4 @@
-# tsubame_lib
-
-## GRPC
-
-TODO
+# tsubame_commons
 
 ## References
 

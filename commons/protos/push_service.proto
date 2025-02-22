@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package push_commons;
+
+service PushService {
+  rpc v1 (PushRequest) returns (PushResponse);
+}
+
+message PushRequest {
+  int64 id = 1;
+  string channel = 2;
+  bytes data = 3;
+}
+
+message PushResponse {
+    int64 id = 1;
+    int32 code = 2;
+    string message = 3;
+    bytes data = 4;
+}

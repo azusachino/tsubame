@@ -73,7 +73,7 @@ impl<'de> serde::Deserialize<'de> for Config {
             .unwrap_or_default();
         Ok(Config {
             app,
-            postgres: postgres,
+            postgres,
             rest: Value::Table(table),
         })
     }

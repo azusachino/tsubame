@@ -1,5 +1,6 @@
 [workspace]
-members = ["lib", "main"]
+members = ["gateway", "commons", "application"]
+resolver = "2"
 
 [profile.release]
 # Link-time optimization (LTO) is a whole-program optimization technique that can improve runtime speed by 10-20% or more, and also reduce binary size, at the cost of worse compile times.
