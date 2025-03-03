@@ -1,6 +1,8 @@
 use anyhow::Result;
 
-use tonic::{transport::Server, Request, Response, Status};
+use axum::Router;
+use axum::routing::{get, post};
+use tonic::{Request, Response, Status, transport::Server};
 use tsubame_commons::push_commons::push_service_server::{PushService, PushServiceServer};
 use tsubame_commons::push_commons::{PushRequest, PushResponse};
 
@@ -29,11 +31,31 @@ impl PushService for GrpcPushService {
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    let addr = "[::1]:50001".parse()?;
+    // initializing logger, dotenv and config
+    tracing_subscriber::fmt::init();
+    dotenv::dotenv().ok();
+    tsubame_application::load_config()?;
+
     let grpc_push_service = GrpcPushService::default();
-    Server::builder()
-        .add_service(PushServiceServer::new(grpc_push_service))
-        .serve(addr)
-        .await?;
+
+    tokio::spawn(async move {
+        let addr = "[::1]:50002".parse().expect("failed to parse address");
+        tracing::info!("grpc server listening on {}", addr);
+        Server::builder()
+            .add_service(PushServiceServer::new(grpc_push_service))
+            .serve(addr)
+            .await
+            .expect("failed to start server");
+    });
+
+    let app = Router::new()
+        .route("/status", get(|| async { "OK" }))
+        .route(
+            "/users",
+            post(tsubame_application::service::user::create_user),
+        );
+    let http_server = tokio::net::TcpListener::bind("0.0.0.0:3000").await?;
+    tracing::info!("http server listening on {}", http_server.local_addr()?);
+    axum::serve(http_server, app).await?;
     Ok(())
 }

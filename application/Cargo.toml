@@ -2,7 +2,7 @@
 name = "tsubame_application"
 version = "0.0.1"
 authors = ["azusachino <azusa146@gmail.com>"]
-edition = "2021"
+edition = "2024"
 readme = "README.md"
 license-file = "LICENSE"
 repository = "https://github.com/azusachino/tsubame"
@@ -31,6 +31,11 @@ prost = "0.13"
 
 # alloc
 tikv-jemallocator = "0.6"
+
+# logging
+tracing = "0.1"
+tracing-appender = "0.2"
+tracing-subscriber = "0.3"
 
 [profile.dev]
 opt-level = 0

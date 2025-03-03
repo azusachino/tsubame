@@ -4,9 +4,12 @@
 
 pub mod config;
 mod internal;
+pub mod service;
 
 /// The current version of `tsubame`
 pub const CURRENT_VERSION: &str = env!("CARGO_PKG_VERSION");
+
+use std::{env, path::Path};
 
 pub use crate::config::Config;
 
@@ -19,14 +22,16 @@ pub mod errors {
 }
 
 pub fn load_config() -> anyhow::Result<()> {
-    println!(
+    tracing::info!(
         "Our future is like a tsubame, current version is {}",
         CURRENT_VERSION
     );
 
     // init config
-    let config_location = std::path::Path::new(".").join("config.toml");
-    let config = Config::from_disk(config_location)?;
-    println!("current config: {:?}", config);
+    let environment = env::var("ENVIRONMENT").unwrap_or_else(|_| "dev".to_owned());
+    let config_path = env::var("CONFIG_PATH").unwrap_or_else(|_| ".".to_owned());
+    let config_file = Path::new(&config_path).join(format!("config.{}.toml", environment));
+    let config = Config::from_disk(config_file)?;
+    tracing::info!("current config path: {:?}, cfg: {:?}", &config_path, config);
     Ok(())
 }
