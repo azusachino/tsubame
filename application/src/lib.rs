@@ -5,6 +5,7 @@
 pub mod config;
 mod internal;
 pub mod service;
+pub mod interceptor;
 
 /// The current version of `tsubame`
 pub const CURRENT_VERSION: &str = env!("CARGO_PKG_VERSION");
