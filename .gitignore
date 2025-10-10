@@ -17,3 +17,6 @@ Cargo.lock
 # ignore all .prod.* files
 tsubame.toml
 tsubame.env
+
+# http3 related files, as it would be created automatically
+*.pem
