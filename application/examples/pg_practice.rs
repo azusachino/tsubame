@@ -1,6 +1,6 @@
 use dotenv::dotenv;
-use sqlx::prelude::*;
 use sqlx::PgPool;
+use sqlx::prelude::*;
 
 // easy postgres usage sample
 

@@ -15,5 +15,5 @@ Cargo.lock
 .env
 
 # ignore all .prod.* files
-*.prod.*
-prod.*
+tsubame.toml
+tsubame.env

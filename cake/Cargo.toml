@@ -1,0 +1,14 @@
+[package]
+name = "cake"
+version = "0.1.0"
+edition = "2024"
+build = "build.rs"
+
+[dependencies]
+anyhow = "1"
+quiche = { version = "0.24", features = ["boringssl-vendored"] }
+tokio = { version = "1", features = ["full"] }
+ring = "0.17"
+log = "0.4"
+env_logger = "0.11"
+url = "2"

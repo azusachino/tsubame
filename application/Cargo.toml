@@ -25,9 +25,9 @@ sqlx = { version = "0.8", features = [
 
 tokio = { version = "1", features = ["full"] }
 
-toml = "0.8"
-tonic = "0.12"
-prost = "0.13"
+toml = "0.9"
+tonic = "0.14"
+prost = "0.14"
 
 # alloc
 tikv-jemallocator = "0.6"
@@ -44,6 +44,3 @@ overflow-checks = false # Disable integer overflow checks.
 [target.x86_64-unknown-linux-gnu]
 linker = "lld"                     # Optional, but recommended for faster linking
 # rustflags = ["-C", "target-cpu=x86-64"] # Optional, optimize for x86-64
-
-[build]
-target = "x86_64-unknown-linux-gnu"

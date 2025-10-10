@@ -1,0 +1,1 @@
+FROM --platform=arm64 mirror.gcr.io/library/alpine:3.14

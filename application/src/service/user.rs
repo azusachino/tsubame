@@ -1,4 +1,4 @@
-use axum::{http::StatusCode, Json};
+use axum::{Json, http::StatusCode};
 use serde_derive::{Deserialize, Serialize};
 
 pub async fn create_user(

@@ -1,5 +1,5 @@
 [workspace]
-members = ["application", "balancer", "commons", "gateway"]
+members = ["application", "balancer", "cake", "commons", "gateway"]
 resolver = "2"
 
 [profile.release]
